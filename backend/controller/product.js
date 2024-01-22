@@ -25,7 +25,7 @@ const productAdd=async (req, res) => {
 
   //edit 
   const editProduct=async (req,res)=>{
-
+ console.log("hello")
     let bodyData=req.body
     let id=req.body.id
     // console.log(req.file)
@@ -33,11 +33,13 @@ const productAdd=async (req, res) => {
     if(req?.file?.filename){
       let  Images=req.file.filename;
       const data = await addProduct.updateOne({_id:`${id}`},{$set:{...bodyData,Images}});
+      console.log({"data":data})
       res.send(data)
   
     }
     else{
       const data = await addProduct.updateOne({_id:`${id}`},{$set:{...bodyData}});
+      console.log({"data":data})
       res.send(data)
     }
   

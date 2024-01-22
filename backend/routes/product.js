@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var multer = require("multer");
 var path = require("path");
-var { productValidation } = require("../middleware/addproduct.js");
+var { productValidation,productUpdateValidation } = require("../middleware/addproduct.js");
 var product = require("../controller/product.js");
 
 const storage = multer.diskStorage({
@@ -28,8 +28,8 @@ router.get("/detail/:id", product.productFindById);
 router.get("/searchbar/", product.searchbar);
 router.post(
   "/update",
-  upload.single("Images"),
-  productValidation,
+  upload.single("Images"),  
+  productUpdateValidation,
   product.editProduct
 );
    
