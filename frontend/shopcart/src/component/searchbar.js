@@ -7,16 +7,20 @@ const Searchbar = () => {
         const[search,setsearch]=useState("");
       
         const {globaldata,setglobaldata}=useContext(UserContext)
-
+        const {searchdata,setsearchdata}=useContext(UserContext)
         async function searchproduct(){
           let searchTerm=search.trim()
           if(searchTerm){
              const response=await axios.get(`http://localhost:2024/product/searchbar/?search_query=${searchTerm}`);
-             console.log(response)
-            
-             setglobaldata(response)
+             const response1 = await axios.post(
+              `http://localhost:2024/product/price?search_query=${searchTerm}`
              
-             if(response.data.length<1){
+            );
+            //  console.log(response)
+            setsearchdata(searchTerm)
+             setglobaldata(response1)
+             
+             if(response1.data.length<1){
               alert("Search item not found");
              }
           }else{

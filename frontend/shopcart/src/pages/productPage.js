@@ -17,7 +17,7 @@ function ProductPage() {
   const [rangeValue, setRangeValue] = useState(50);
   const [Category, setCategory] = useState("");
   const [data, setdata] = useState([]);
-  const { globaldata, setglobaldata } = useContext(UserContext);
+  const { globaldata, setglobaldata,searchdata,setsearchdata } = useContext(UserContext);
   // const [editdata, seteditdata] = useState({});
   const [editdata, seteditdata] = useState({});
   // const imageUrl = 'http://localhost:2024/images/file-1705495443343.png';
@@ -145,11 +145,12 @@ function ProductPage() {
   }
 
   async function handlePriceSearch() {
-    console.log(Category);
-    let CategoryId=Category
+    console.log(searchdata);
+    let CategoryId=searchdata||Category
     const range1 = rangeValues[0];
     const range2 = rangeValues[1];
     console.log(range1);
+    console.log(CategoryId);
     const obj = {CategoryId, range1, range2 };
     try {
       const response = await axios.post(
@@ -177,11 +178,12 @@ function ProductPage() {
   useEffect(() => {
     // handleSearch();
     handlePriceSearch() ;
-  }, [Category]);
+  }, [Category,searchdata]);
 
   function handleCategorySearch(e) {
     const data = e.target.value;
     setCategory(data);
+    setsearchdata(data);
   }
 
   return (

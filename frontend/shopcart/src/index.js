@@ -10,10 +10,12 @@ export const UserContext=createContext();
 const Myglobalstate=({children})=>{
   const [globaldata,setglobaldata]=useState({data:[]});
   const [cartdata,setcartdata]=useState([]);
+  const [searchdata,setsearchdata]=useState("");
+ 
 
   return(
     <>
-   <UserContext.Provider  value={{globaldata,setglobaldata,cartdata,setcartdata}}>
+   <UserContext.Provider  value={{globaldata,setglobaldata,cartdata,setcartdata,searchdata,setsearchdata}}>
        {children}
    </UserContext.Provider>
 

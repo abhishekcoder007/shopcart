@@ -54,7 +54,7 @@ const addProductCollection = addProduct.collection;
     console.log("Indexes dropped successfully:", result);
 
     addProductCollection.createIndex(
-      { Description: "text", Title: "text", Brand: "text" },
+      { Description: "text", Title: "text", Brand: "text",Category: "text"},
       { name: "Description_text_index" },
       (err, result) => {
         if (err) {
