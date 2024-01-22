@@ -146,10 +146,11 @@ function ProductPage() {
 
   async function handlePriceSearch() {
     console.log(Category);
+    let CategoryId=Category
     const range1 = rangeValues[0];
     const range2 = rangeValues[1];
     console.log(range1);
-    const obj = { range1, range2 };
+    const obj = {CategoryId, range1, range2 };
     try {
       const response = await axios.post(
         `http://localhost:2024/product/price`,
@@ -174,7 +175,8 @@ function ProductPage() {
   }, [rangeValues]);
 
   useEffect(() => {
-    handleSearch();
+    // handleSearch();
+    handlePriceSearch() ;
   }, [Category]);
 
   function handleCategorySearch(e) {

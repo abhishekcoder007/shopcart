@@ -78,30 +78,22 @@ const allProductData= async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 }
-
-
-const categorySearch= async (req, res) => {
-  const id=req.params.id
-
-  try {
-    if(id=="all"){
-      const data = await addProduct.find();
-      res.send(data );
-    }else{
-    const data = await addProduct.find({Category:`${req.params.id}`});
-    res.send(data );
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-}
-
+//price a/c to category
 const priceSearch= async (req, res) => {
   try {
     const pricedata=req?.body
-  const data = await addProduct.find({Price:{ $gte:pricedata.range1, $lte: pricedata.range2 }});
-    res.send(data );
+    console.log(pricedata)
+    if(pricedata?.CategoryId=="all"){
+      const data = await addProduct.find();
+      res.send(data );
+      return
+    }
+    if(pricedata?.CategoryId){
+      const data = await addProduct.find({Category:`${req.body.CategoryId}`,Price:{ $gte:pricedata.range1, $lte: pricedata.range2 }});
+      res.send(data );
+      console.log(data)
+      return
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -119,4 +111,4 @@ const productFindById=async (req,res)=>{
 
 
 
-  module.exports={productAdd,productDelete,editProduct,searchbar,allProductData,categorySearch,priceSearch,productFindById}
+  module.exports={productAdd,productDelete,editProduct,searchbar,allProductData,priceSearch,productFindById}

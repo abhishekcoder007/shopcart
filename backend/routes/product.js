@@ -17,7 +17,7 @@ const upload = multer({ storage });
 
 router.get("/add", product.allProductData);
 
-router.get("/category/:id", product.categorySearch);
+// router.get("/category/:id", product.categorySearch);
 router.post("/price", product.priceSearch);
 
 router.post("/add",upload.single("Images"),productValidation,product.productAdd);
