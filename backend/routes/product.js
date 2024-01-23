@@ -32,6 +32,8 @@ router.post(
   productUpdateValidation,
   product.editProduct
 );
+
+router.get("/homesearch",product.homesearchitem)
    
 
 

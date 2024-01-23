@@ -107,18 +107,18 @@ const productFindById = async (req, res) => {
 };
 
 const querySearch = async (req, res) => {
- let pricedata=req.body
-  const searchTerm =req?.body?.CategoryId;
-  if(searchTerm=="all"){
+  let pricedata = req.body;
+  const searchTerm = req?.body?.CategoryId;
+  if (searchTerm == "all") {
     const results = await addProduct.find({});
     res.send(results);
     return;
   }
- 
-  console.log(searchTerm)
-  console.log(req?.body?.range1 )
-  if ((req?.body?.range1 > 0) || (req?.body?.range2 < 10000)) {
-    console.log(req?.body?.range1 )
+
+  console.log(searchTerm);
+  console.log(req?.body?.range1);
+  if (req?.body?.range1 > 0 || req?.body?.range2 < 10000) {
+    console.log(req?.body?.range1);
     try {
       const results = await addProduct.find({
         $text: { $search: searchTerm },
@@ -146,6 +146,31 @@ const querySearch = async (req, res) => {
   }
 };
 
+const homesearchitem=async (req,res)=>{
+  // console.log(req.query)
+ const {Category,Price,Brand,Title}=req?.query
+ let searchData={}
+ if(Category){
+  searchData={...searchData,Category}
+ }
+ if(Price!=0){
+  let max=Price
+  searchData={...searchData,Price:{$gte:0,$lte:`${max}`}}
+ }
+ if(Brand){
+  searchData={...searchData,Brand}
+ }
+ if(Title){
+  let searchtitle=Title
+  searchData={...searchData,Title:{$regex:new RegExp(searchtitle,'i')}}
+ }
+console.log(searchData)
+
+const results = await addProduct.find(searchData);
+res.send(results)
+console.log(results)
+}
+
 module.exports = {
   productAdd,
   productDelete,
@@ -154,5 +179,6 @@ module.exports = {
   allProductData,
   // priceSearch,
   productFindById,
-  querySearch
+  querySearch,
+  homesearchitem
 };
