@@ -57,7 +57,6 @@ const Searchbar = () => {
         </Col>
       </Row>
     </Container>
-    {/* {JSON.stringify(d)} */}
     </div>
   )
 }

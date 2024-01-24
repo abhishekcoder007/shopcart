@@ -189,9 +189,7 @@ function ProductPage() {
   return (
     <div>
       <NavBar navcolor="success" />
-      {/* {JSON.stringify(globaldata)} */}
-      {/* <img src={imageUrl} alt="hello"/> */}
-      {/* <img src='./my_img.jpeg' alt="hello"/> */}
+    
       <div className="w-100 d-flex justify-content-between align-items-center shadow-md ">
         <div className="bg-secondary me-5">
           <select onChange={handleCategorySearch} className="w-100">
