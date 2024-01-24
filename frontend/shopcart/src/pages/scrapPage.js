@@ -16,8 +16,14 @@ function ScrapPage() {
   e.preventDefault();
   
     const response = await axios.get(`http://localhost:2024/scrap?url=${url}`);
+    if(response?.data?.error){
+      console.log(response.data);
+      alert(response.data.error)
+      return
+    }
     if (response.data) setdata(response.data);
     console.log(response);
+    handleClose()
 
   }
 
@@ -27,7 +33,7 @@ function ScrapPage() {
       <Button variant="primary" onClick={handleShow}>
         Click for Scraping
       </Button>
-
+     {/* <div>Scraping for url:-{url}</div> */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Enter url here</Modal.Title>
@@ -47,6 +53,7 @@ function ScrapPage() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <div className="w-100 my-2 p-5 py-2 bg-info shadow-md">Scraping for url:-{url}</div>
        <div>
        <div className="container">
             <div className="row">

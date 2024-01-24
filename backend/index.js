@@ -7,14 +7,32 @@ var axios=require("axios");
 require("./db/connection.js");
 var productRoute=require("./routes/product.js");
 
+
+const isValidUrl = (url) => {
+    try {
+        new URL(url);
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
+
 const getImages = async (url) => {
     const imageList = [];
-	const {data} = await axios.get(`${url}`);
 
-    const $ = cheerio.load(data);
-  
-      
+    if (!isValidUrl(url)) {
+        console.log("Invalid URL");
+        return {
+            "error":"Invalid URL",
+        };
+    }
+try{
+	const response = await axios.get(`${url}`);
+    console.log(url)
+    console.log(response)
   try{
+    const $ = cheerio.load(response?.data);
     $('img').each((i, image) => {
         const imageUrl = $(image).attr('src');
         if (imageUrl) {
@@ -33,12 +51,30 @@ const getImages = async (url) => {
       })
     //  console.log(List);
     //   console.log(imageList)
-      return List;S
+      return List;
     } catch (err) {
      console.log(err)
+     return []
     }
-   
 
+
+}
+catch(err){
+    if (axios.AxiosError) {
+        console.error(`AxiosError: ${err.message}`);
+        const data={
+            "error":err.message
+        }
+        return data
+    } else {
+        console.error(err.message);
+        const data={
+            "error":err.message
+        }
+        return data
+    }
+  
+}
 
 };
 
@@ -50,6 +86,7 @@ console.log(path.join(__dirname, 'images'));
 
 app.use("/product",productRoute.router)
 app.get("/scrap",async (req,res)=>{
+
    const response=await  getImages(req.query.url);
     
    res.send(response);
