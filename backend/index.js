@@ -45,12 +45,10 @@ try{
         return ele
        }else{
         let text=`${url}${ele}`
-        // console.log(text)
         return text
        }
       })
-    //  console.log(List);
-    //   console.log(imageList)
+  
       return List;
     } catch (err) {
      console.log(err)
