@@ -14,24 +14,20 @@ import { UserContext } from "../index.js";
 function ProductPage() {
   const isFirstRender = useRef(true);
   const [show, setShow] = useState(false);
+  const [inputerr, setInputerr] = useState({});
   const [rangeValue, setRangeValue] = useState(50);
   const [Category, setCategory] = useState("");
   const [data, setdata] = useState([]);
   const { globaldata, setglobaldata,searchdata,setsearchdata } = useContext(UserContext);
-  // const [editdata, seteditdata] = useState({});
   const [editdata, seteditdata] = useState({});
-  // const imageUrl = 'http://localhost:2024/images/file-1705495443343.png';
+ 
   const baseUrl = "http://localhost:2024/images";
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [rangeValues, setRangeValues] = useState([0, 10000]);
 
-  // useEffect(()=>{
 
-  //        setdata(globaldata?.data)
-
-  // },[globaldata])
 
   async function fetchData() {
     const response = await axios.get("http://localhost:2024/product/add");
@@ -79,6 +75,8 @@ function ProductPage() {
   const handleChangeFile = (event) => {
     const name = event.target.name;
     const value = event.target.files[0];
+  
+   
     seteditdata((values) => ({ ...values, [name]: value }));
   };
 
@@ -165,7 +163,7 @@ function ProductPage() {
   }
   const handleRangeChange = (values) => {
     setRangeValues([...values]);
-    // handlePriceSearch()
+    
   };
   useEffect(() => {
     if (isFirstRender.current) {
@@ -176,7 +174,7 @@ function ProductPage() {
   }, [rangeValues]);
 
   useEffect(() => {
-    // handleSearch();
+   
     handlePriceSearch() ;
   }, [Category,searchdata]);
 
@@ -338,6 +336,7 @@ function ProductPage() {
                     value={editdata?.Title}
                     onChange={handleChange}
                   />
+                  {inputerr?.titleErr}
                   <label className="form-label" for="form6Example1">
                     Title
                   </label>
@@ -353,6 +352,7 @@ function ProductPage() {
                     name="Price"
                     onChange={handleChange}
                   />
+                   {inputerr?.priceErr}
                   <label className="form-label" for="form6Example2">
                     Price
                   </label>

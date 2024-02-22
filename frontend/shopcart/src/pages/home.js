@@ -171,7 +171,7 @@ setSearch((old)=>{
                   className="img-fluid"
                   style={{ width: "100%", height: "11rem", objectFit: "cover" }}
                   variant="top"
-                  src={`${baseUrl}/${obj?.Images}`}
+                  src={`${baseUrl}/${obj.Images}`}
                 />
                 <Card.Body>
                   <Card.Title>{obj.Title}</Card.Title>

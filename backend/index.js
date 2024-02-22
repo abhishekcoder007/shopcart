@@ -5,7 +5,9 @@ var app=express();
 const cheerio = require("cheerio");
 var axios=require("axios");
 require("./db/connection.js");
+
 var productRoute=require("./routes/product.js");
+
 var {getImages}=require("./custom_functions/scrap.js")
 
 

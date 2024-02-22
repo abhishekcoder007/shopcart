@@ -26,8 +26,6 @@ const editProduct = async (req, res) => {
   console.log("hello");
   let bodyData = req.body;
   let id = req.body.id;
-  // console.log(req.file)
-  // console.log(req.body)
   if (req?.file?.filename) {
     let Images = req.file.filename;
     const data = await addProduct.updateOne(

@@ -9,9 +9,17 @@ import { useNavigate } from "react-router-dom";
 
 function Producteditnav() {
   const [show, setShow] = useState(false);
-  //   const [data, setdata] = useState({});
+
   const [inputs, setInputs] = useState({});
-  const [inputerr, setInputerr] = useState("");
+ 
+  const [inputerrs, setInputerrs] = useState({
+    "imageErr":"",
+    "titleErr":"",
+    "priceErr":"",
+    "categoryErr":"",
+    "descriptionErr":"",
+    "ratingErr":"",
+    });
   const navigate=useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,14 +28,77 @@ function Producteditnav() {
   
     const name = event.target.name;
     const value = event.target.files[0];
+    
+    if(!value){
+     
+        setInputerrs({...inputerrs,["imageErr"]:"image should empty"})
+        return
+  
+    }else{
+      delete  inputerrs?.ratingErr
+    }
     setInputs((values) => ({ ...values, [name]: value }));
+
   };
 
   const handleChange = (event) => {
   
     const name = event.target.name;
     const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+
+    if(name=="Title"){
+      if(value.length<3){
+        setInputerrs({...inputerrs,["titleErr"]:"title should more than 3"});
+        
+      }else{
+        delete inputerrs?.titleErr
+      }
+    }
+    if(name=="Brand"){
+      if(value.length<3){
+        setInputerrs({...inputerrs,["brandErr"]:"brand name should more than 3"});
+      
+      }else{
+        delete  inputerrs?.brandErr
+      }
+    }
+    if(name=="Price"){
+      if(isNaN(value)){
+        setInputerrs({...inputerrs,["priceErr"]:"PRICE NAME IS INT TYPE LIKE 99999"});
+      
+      }
+      if(value.length<1){
+        setInputerrs({...inputerrs,["priceErr"]:"enter price"});
+        
+      }else{
+        delete  inputerrs?.priceErr
+      }
+    }
+    if(name=="Category"){
+      if(value.length<2){
+        setInputerrs({...inputerrs,["categoryErr"]:"enter  category"})
+       
+      }else{
+        delete  inputerrs?.categoryErr
+      }
+    }
+    if(name=="Description"){
+      if(value.length<2){
+        setInputerrs({...inputerrs,["descriptionErr"]:"enter  category"})
+     
+      }else{
+        delete  inputerrs?.descriptionErr
+      }
+    }
+    if(name=="Rating"){
+      if(value.length<1){
+        setInputerrs({...inputerrs,["ratingErr"]:"rate like 1 , 2 ,5"})
+      
+      }else{
+        delete  inputerrs?.ratingErr
+      }
+    }
+    setInputs({ ...inputs, [name]: value });
   };
 
   const handleFormSubmit = async (e) => {
@@ -122,7 +193,8 @@ function Producteditnav() {
                     name="Title"
                     value={inputs?.Title} 
                     onChange={handleChange}
-                  />
+                  /><br/>
+                  <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.titleErr}</p>
                  
                 </div>
               </div>
@@ -139,7 +211,8 @@ function Producteditnav() {
                     value={inputs?.Price}
                     onChange={handleChange}
                   />
-                
+                <br/>
+                  <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.priceErr}</p>
                 </div>
               </div>
             </div>
@@ -156,7 +229,7 @@ function Producteditnav() {
                 value={inputs?.Brand}
                 onChange={handleChange}
               />
-           
+            <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.brandErr}</p>
             </div>
 
             <div data-mdb-input-init className="form-outline mb-4">
@@ -171,7 +244,8 @@ function Producteditnav() {
                 value={inputs?.Category}
                 onChange={handleChange}
               />
-          
+              <br/>
+           <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.categoryErr}</p>
             </div>
 
             <div data-mdb-input-init className="form-outline mb-4">
@@ -186,7 +260,9 @@ function Producteditnav() {
                 value={inputs?.DiscountPercentage}
                 onChange={handleChange}
               />
-           
+               <br/>
+                  <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.discountpercentageErr}</p>
+               
             </div>
 
             <div data-mdb-input-init className="form-outline mb-4">
@@ -201,7 +277,9 @@ function Producteditnav() {
                 value={inputs?.Rating}
                 onChange={handleChange}
               />
-          
+
+<br/>
+           <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.ratingErr}</p>
             </div>
 
             {/* image  */}
@@ -218,6 +296,9 @@ function Producteditnav() {
 
                 onChange={handleChangeFile}
               />
+
+<br/>
+           <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.imageErr}</p>
              
             </div>
 
@@ -233,6 +314,8 @@ function Producteditnav() {
                 value={inputs?.Description}
                 onChange={handleChange}
               ></textarea>
+              <br/>
+           <p style={{color:"red", fontWeight:"500"}}>{inputerrs?.descriptionErr}</p>
             </div>
 
         
